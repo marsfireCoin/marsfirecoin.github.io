@@ -11,28 +11,23 @@
         <h1>Welcome to MarsFireCoin</h1>
         <p>Your gateway to the future of decentralized finance.</p>
     </header>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="newpage.html">New Page</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section>
-            <h2>About MarsFireCoin</h2>
-            <p>MarsFireCoin is a revolutionary cryptocurrency designed to power interplanetary trade and innovation. Join the mission today!</p>
-        </section>
-        <section>
-            <h2>Features</h2>
-            <ul>
-                <li>Decentralized and secure</li>
-                <li>Lightning-fast transactions</li>
-                <li>Eco-friendly blockchain technology</li>
-            </ul>
-        </section>
-    </main>
+
+    <!-- Cryptocurrency Image and Links Section -->
+    <section>
+        <h2>Follow MarsFireCoin</h2>
+        <div class="cryptocoin-container">
+            <!-- Cryptocurrency Image -->
+            <img src="images/cryptocoin.png" alt="MarsFireCoin" class="cryptocoin-image">
+
+            <!-- Links for Chart, Twitter, and Telegram -->
+            <div class="links">
+                <a href="https://www.examplechart.com" target="_blank" class="link-button">Chart</a>
+                <a href="https://twitter.com/MarsFireCoin" target="_blank" class="link-button">Twitter</a>
+                <a href="https://t.me/MarsFireCoin" target="_blank" class="link-button">Telegram</a>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <p>&copy; 2025 MarsFireCoin. All rights reserved.</p>
     </footer>
