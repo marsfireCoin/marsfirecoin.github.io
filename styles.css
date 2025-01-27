@@ -1,41 +1,29 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-header {
-    background-color: #ff5733;
-    color: white;
+/* Style for cryptocurrency image and links */
+.cryptocoin-container {
     text-align: center;
-    padding: 1rem;
+    margin: 2rem 0;
 }
-nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
-    background: #333;
+
+.cryptocoin-image {
+    width: 150px;  /* Adjust size as needed */
+    height: auto;
+    border-radius: 50%;
 }
-nav ul li {
+
+.links {
+    margin-top: 1rem;
+}
+
+.link-button {
     margin: 0 10px;
-}
-nav ul li a {
+    padding: 10px 20px;
+    background-color: #1d72b8;
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    display: block;
+    border-radius: 5px;
+    font-size: 1rem;
 }
-nav ul li a:hover {
-    background: #ff5733;
-    color: white;
-}
-main {
-    padding: 1rem;
-}
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #333;
-    color: white;
+
+.link-button:hover {
+    background-color: #155a8a;
 }
