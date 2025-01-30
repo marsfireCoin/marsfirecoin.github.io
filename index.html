@@ -1,36 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MarsFireCoin Adventure Game</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.1/web3.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarsFireCoin Quest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+    <script src="js/web3.js"></script>
+    <script src="js/game.js"></script>
 </head>
 <body>
-  <div class="header">
-    <img src="marsfirecoin_logo.png" alt="MarsFireCoin Logo" class="logo">
-    <h1>MarsFireCoin Adventure</h1>
-  </div>
-
-  <div class="game-container">
-    <div class="game-content">
-      <h2>Start your adventure and collect MarsFireCoin tokens!</h2>
-      <button class="game-start-button" onclick="startGame()">Start Game</button>
-      <div id="gameBoard" class="game-board">
-        <!-- Game elements will appear here -->
-      </div>
-      <p id="gameStatus"></p>
+    <div id="game-container">
+        <h1>Welcome to MarsFireCoin Quest</h1>
+        <button id="connect-wallet">Connect Wallet</button>
+        <div id="player-info"></div>
+        <div id="game"></div>
+        <button id="start-quest" disabled>Start Quest</button>
+        <div id="nft-marketplace">
+            <h2>NFT Marketplace</h2>
+            <button id="buy-nft">Buy NFT</button>
+        </div>
     </div>
-  </div>
-
-  <div class="footer">
-    <p>Stay connected:</p>
-    <a href="https://www.examplechart.com" target="_blank" class="link-button">📈 Chart</a>
-    <a href="https://twitter.com/MarsFireCoin" target="_blank" class="link-button">🐦 Twitter</a>
-    <a href="https://t.me/MarsFireCoin" target="_blank" class="link-button">💬 Telegram</a>
-  </div>
-
-  <script src="game.js"></script>
 </body>
 </html>
