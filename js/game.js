@@ -1,42 +1,59 @@
-let isQuestStarted = false;
+window.onload = function () {
+    console.log("Game script loaded");
 
-document.getElementById('start-quest').onclick = startQuest;
-document.getElementById('buy-nft').onclick = buyNFT;
+    const connectButton = document.getElementById("connect-wallet");
+    if (connectButton) {
+        connectButton.onclick = function () {
+            console.log("Connect Wallet Clicked");
+            connectWallet(); // Call your Web3 wallet connection function
+        };
+    } else {
+        console.error("Connect Wallet button not found!");
+    }
 
-async function startQuest() {
-    if (!isQuestStarted) {
-        alert("Quest started! Earn MarsFireCoin for completing it.");
-        isQuestStarted = true;
-        // Simulate earning MarsFireCoin and completing the quest
-        await completeQuest();
+    const startQuestButton = document.getElementById("start-quest");
+    if (startQuestButton) {
+        startQuestButton.onclick = function () {
+            console.log("Starting the quest...");
+            startQuest();
+        };
+    } else {
+        console.error("Start Quest button not found!");
+    }
+
+    const buyNFTButton = document.getElementById("buy-nft");
+    if (buyNFTButton) {
+        buyNFTButton.onclick = function () {
+            console.log("Buying NFT...");
+            buyNFT();
+        };
+    } else {
+        console.error("Buy NFT button not found!");
+    }
+};
+
+// Example Web3 function for connecting a wallet
+async function connectWallet() {
+    if (window.ethereum) {
+        try {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            console.log("Connected account:", accounts[0]);
+
+            // Enable the Start Quest button after wallet connection
+            document.getElementById("start-quest").disabled = false;
+        } catch (error) {
+            console.error("Wallet connection failed:", error);
+        }
+    } else {
+        alert("MetaMask not detected. Please install MetaMask.");
     }
 }
 
-async function completeQuest() {
-    const rewardAmount = web3.utils.toWei("10", "ether"); // 10 MarsFireCoin tokens
-
-    try {
-        const receipt = await contract.methods
-            .rewardPlayer(accounts[0], rewardAmount)
-            .send({ from: accounts[0] });
-        alert("Quest completed! You earned 10 MarsFireCoin.");
-        console.log("Transaction successful: ", receipt);
-    } catch (error) {
-        console.error("Transaction failed: ", error);
-    }
+function startQuest() {
+    console.log("Quest started!");
+    document.getElementById("game").innerHTML = "🔥 Quest in progress... Earn MarsFireCoin!";
 }
 
-async function buyNFT() {
-    const nftId = 1; // Example NFT ID to buy
-    const price = web3.utils.toWei("0.05", "ether"); // Price of NFT in Ether (could be MarsFireCoin)
-
-    try {
-        const receipt = await nftContract.methods
-            .buyNFT(nftId)
-            .send({ from: accounts[0], value: price });
-        alert("NFT purchased successfully!");
-        console.log("NFT purchased: ", receipt);
-    } catch (error) {
-        console.error("NFT purchase failed: ", error);
-    }
+function buyNFT() {
+    console.log("NFT purchase initiated!");
 }
