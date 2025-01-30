@@ -80,3 +80,26 @@ function update() {
 spawnCoin();
 setInterval(spawnAsteroid, 2000);
 update();
+
+async function rewardPlayer() {
+    if (!signer) {
+        alert("Connect Wallet First!");
+        return;
+    }
+
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    const amount = ethers.utils.parseUnits("10", 18); // Reward 10 MarsFireCoin
+
+    try {
+        const tx = await contract.transfer(userAddress, amount);
+        await tx.wait();
+        alert("10 MarsFireCoin Sent to Your Wallet!");
+    } catch (error) {
+        console.error("Transaction failed", error);
+    }
+}
+
+// Call this when score reaches a milestone
+if (score >= 50) {
+    rewardPlayer();
+}

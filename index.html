@@ -3,33 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarsFireCoin</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Optional: Link to your CSS file -->
+    <title>MarsFireCoin Explorer</title>
+    <style>
+        body { text-align: center; background-color: black; color: white; }
+        canvas { background: url('mars_background.jpg') no-repeat center center; background-size: cover; }
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script src="web3.js"></script>
+
 </head>
 <body>
-    <header>
-        <h1>Welcome to MarsFireCoin</h1>
-        <p>Your gateway to the future of decentralized finance.</p>
-    </header>
+    <h1>MarsFireCoin Explorer</h1>
+    <p>Use Arrow Keys to Move | Collect Coins | Avoid Asteroids</p>
+<button id="connectWallet">Connect Wallet</button>
+<p id="walletAddress">Not Connected</p>
+<p id="tokenBalance">MarsFireCoin: 0</p>
 
-    <!-- Cryptocurrency Image and Links Section -->
-    <section>
-        <h2>Follow MarsFireCoin</h2>
-        <div class="cryptocoin-container">
-            <!-- Cryptocurrency Image -->
-            <img src="cryptocoin.png" alt="MarsFireCoin" class="cryptocoin-image">
+    <canvas id="gameCanvas"></canvas>
+    <script src="game.js"></script>
 
-            <!-- Links for Chart, Twitter, and Telegram -->
-            <div class="links">
-                <a href="https://www.examplechart.com" target="_blank" class="link-button">Chart</a>
-                <a href="https://twitter.com/MarsFireCoin" target="_blank" class="link-button">Twitter</a>
-                <a href="https://t.me/MarsFireCoin" target="_blank" class="link-button">Telegram</a>
-            </div>
-        </div>
-    </section>
+<h2>Marketplace</h2>
+<button onclick="buyItem(1)">Buy Shield - 5 MFC</button>
+<button onclick="buyItem(2)">Buy Speed Boost - 10 MFC</button>
+<p id="purchaseStatus"></p>
 
-    <footer>
-        <p>&copy; 2025 MarsFireCoin. All rights reserved.</p>
-    </footer>
 </body>
 </html>
