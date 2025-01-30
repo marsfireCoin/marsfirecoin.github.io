@@ -17,8 +17,6 @@ window.onload = function () {
         buyNFTButton.onclick = buyNFT;
         buyNFTButton.disabled = true; // Disable initially
     }
-
-    updateUI();
 };
 
 // 🛠️ Connect Wallet
@@ -39,10 +37,18 @@ async function connectWallet() {
 // 🎮 Start Quest
 function startQuest() {
     console.log("Quest started!");
+
+    // Ensure the game container exists
+    let gameScreen = document.getElementById("game-screen");
+    if (!gameScreen) {
+        console.error("Element with ID 'game-screen' not found.");
+        return;
+    }
+
     playerMFC = 0;
     questProgress = 0;
 
-    document.getElementById("game-screen").innerHTML = `
+    gameScreen.innerHTML = `
         <div class="quest-map">
             <div class="character" id="character"></div>
         </div>
@@ -61,6 +67,11 @@ function nextChallenge() {
             const character = document.getElementById("character");
             const progressBar = document.getElementById("quest-progress");
             const questStatus = document.getElementById("quest-status");
+
+            if (!character || !progressBar || !questStatus) {
+                console.error("Game elements missing!");
+                return;
+            }
 
             if (challengeResult) {
                 const earnedMFC = Math.floor(Math.random() * 50) + 10;
@@ -85,12 +96,18 @@ function nextChallenge() {
 // 🏆 Finish Quest
 function finishQuest() {
     console.log("Quest Completed!");
-    document.getElementById("quest-status").innerHTML = `🎉 Quest Completed! You earned ${playerMFC} MFC!`;
+    let questStatus = document.getElementById("quest-status");
+
+    if (questStatus) {
+        questStatus.innerHTML = `🎉 Quest Completed! You earned ${playerMFC} MFC!`;
+    }
+
     document.getElementById("start-quest").disabled = false;
 
     // Enable NFT purchase
-    if (playerMFC >= nftPrice) {
-        document.getElementById("buy-nft").disabled = false;
+    let buyNFTButton = document.getElementById("buy-nft");
+    if (buyNFTButton && playerMFC >= nftPrice) {
+        buyNFTButton.disabled = false;
     }
 }
 
@@ -98,7 +115,11 @@ function finishQuest() {
 function buyNFT() {
     if (playerMFC >= nftPrice) {
         playerMFC -= nftPrice;
-        document.getElementById("game-screen").innerHTML += `<p>🎨 You bought an NFT! Remaining MFC: ${playerMFC}</p>`;
+        let gameScreen = document.getElementById("game-screen");
+
+        if (gameScreen) {
+            gameScreen.innerHTML += `<p>🎨 You bought an NFT! Remaining MFC: ${playerMFC}</p>`;
+        }
     } else {
         alert("Not enough MFC to buy an NFT!");
     }
