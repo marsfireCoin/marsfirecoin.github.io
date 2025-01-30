@@ -82,13 +82,29 @@ function nextChallenge() {
 }
 
 // 🏆 Finish Quest
-function finishQuest() {
+async function finishQuest() {
     console.log("Quest Completed!");
     document.getElementById("quest-status").innerHTML = `🎉 Quest Complete! You earned ${playerMFC} MFC!`;
-    document.getElementById("start-quest").disabled = false;
 
-    if (playerMFC >= nftPrice) {
-        document.getElementById("buy-nft").disabled = false;
+    // Get the player's wallet address (already connected)
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+
+    if (accounts.length > 0) {
+        const playerAddress = accounts[0];
+
+        // Call the rewardPlayer function to mint the tokens to the player's wallet
+        const contract = new web3.eth.Contract(abi, contractAddress); // Set ABI and contract address
+        try {
+            await contract.methods.rewardPlayer(playerAddress, playerMFC).send({ from: playerAddress });
+            console.log(`Minted ${playerMFC} MFC to ${playerAddress}`);
+            // Optionally, show a success message to the user
+            alert(`🎉 You have earned ${playerMFC} MFC tokens!`);
+        } catch (error) {
+            console.error("Error minting MFC:", error);
+            alert("Error minting tokens. Please try again.");
+        }
+    } else {
+        alert("Please connect your MetaMask wallet.");
     }
 }
 
