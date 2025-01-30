@@ -11,35 +11,23 @@ window.onload = function () {
     const startQuestButton = document.getElementById("start-quest");
     const buyNFTButton = document.getElementById("buy-nft");
 
-    // Ensure elements exist before adding event listeners
-    if (connectButton) {
-        connectButton.onclick = connectWallet;
-    } else {
-        console.error("Connect Wallet button not found!");
-    }
-
-    if (startQuestButton) {
-        startQuestButton.onclick = startQuest;
-    } else {
-        console.error("Start Quest button not found!");
-    }
-
+    if (connectButton) connectButton.onclick = connectWallet;
+    if (startQuestButton) startQuestButton.onclick = startQuest;
     if (buyNFTButton) {
         buyNFTButton.onclick = buyNFT;
         buyNFTButton.disabled = true; // Disable initially
-    } else {
-        console.error("Buy NFT button not found!");
     }
+
+    updateUI();
 };
 
-// 🛠️ Connect Wallet Function
+// 🛠️ Connect Wallet
 async function connectWallet() {
     if (window.ethereum) {
         try {
             const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
             console.log("Connected account:", accounts[0]);
-
-            document.getElementById("start-quest").disabled = false; // Enable Quest Button
+            document.getElementById("start-quest").disabled = false;
         } catch (error) {
             console.error("Wallet connection failed:", error);
         }
@@ -51,30 +39,42 @@ async function connectWallet() {
 // 🎮 Start Quest
 function startQuest() {
     console.log("Quest started!");
-    document.getElementById("game").innerHTML = `<p>🔥 Quest started! Complete ${totalStages} challenges.</p>`;
+    playerMFC = 0;
     questProgress = 0;
-    playerMFC = 0; // Reset earnings
+
+    document.getElementById("game-screen").innerHTML = `
+        <div class="quest-map">
+            <div class="character" id="character"></div>
+        </div>
+        <progress id="quest-progress" value="0" max="${totalStages}"></progress>
+        <p id="quest-status">🔥 Quest started! Complete ${totalStages} challenges.</p>
+    `;
+
     nextChallenge();
 }
 
-// ⚔️ Quest Challenges
+// ⚔️ Next Challenge
 function nextChallenge() {
     if (questProgress < totalStages) {
         setTimeout(() => {
             const challengeResult = Math.random() < 0.8; // 80% success rate
-            const gameDiv = document.getElementById("game");
+            const character = document.getElementById("character");
+            const progressBar = document.getElementById("quest-progress");
+            const questStatus = document.getElementById("quest-status");
 
             if (challengeResult) {
-                const earnedMFC = Math.floor(Math.random() * 50) + 10; // Earn 10-50 MFC
+                const earnedMFC = Math.floor(Math.random() * 50) + 10;
                 playerMFC += earnedMFC;
                 questProgress++;
 
-                // Append challenge progress instead of replacing the entire text
-                gameDiv.innerHTML += `<p>✅ Challenge ${questProgress}/${totalStages} completed! +${earnedMFC} MFC</p>`;
+                // Update UI
+                progressBar.value = questProgress;
+                questStatus.innerHTML = `✅ Challenge ${questProgress}/${totalStages} completed! +${earnedMFC} MFC`;
+                character.style.left = `${questProgress * 20}%`; // Move character visually
 
-                nextChallenge(); // Move to the next stage
+                nextChallenge(); // Continue to next challenge
             } else {
-                gameDiv.innerHTML += `<p>❌ You failed Challenge ${questProgress + 1}. Click "Start Quest" to retry.</p>`;
+                questStatus.innerHTML = `❌ Challenge ${questProgress + 1} failed. Restart the quest!`;
             }
         }, 2000);
     } else {
@@ -85,22 +85,20 @@ function nextChallenge() {
 // 🏆 Finish Quest
 function finishQuest() {
     console.log("Quest Completed!");
-    const gameDiv = document.getElementById("game");
-    gameDiv.innerHTML += `<p>🎉 Quest Completed! You earned ${playerMFC} MFC!</p>`;
-    document.getElementById("start-quest").disabled = false; // Allow replay
+    document.getElementById("quest-status").innerHTML = `🎉 Quest Completed! You earned ${playerMFC} MFC!`;
+    document.getElementById("start-quest").disabled = false;
 
-    // Enable "Buy NFT" if enough MFC is earned
+    // Enable NFT purchase
     if (playerMFC >= nftPrice) {
         document.getElementById("buy-nft").disabled = false;
     }
 }
 
-// 🎨 Buy NFT with MFC
+// 🎨 Buy NFT
 function buyNFT() {
     if (playerMFC >= nftPrice) {
         playerMFC -= nftPrice;
-        document.getElementById("game").innerHTML += `<p>🎨 You bought an NFT! Remaining MFC: ${playerMFC}</p>`;
-        console.log("NFT Purchased!");
+        document.getElementById("game-screen").innerHTML += `<p>🎨 You bought an NFT! Remaining MFC: ${playerMFC}</p>`;
     } else {
         alert("Not enough MFC to buy an NFT!");
     }
