@@ -1,104 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarsFireCoin Explorer</title>
-    <style>
-        body {
-            text-align: center;
-            background: linear-gradient(45deg, #ff416c, #ff4b2b);
-            color: white;
-            font-family: 'Arial', sans-serif;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        canvas {
-            background-image: url('mars_background.jpg');
-            background-size: cover;
-            display: block;
-            margin: auto;
-            border: 4px solid yellow;
-            box-shadow: 0 0 20px yellow;
-            width: 800px;
-            height: 500px;
-            border-radius: 15px;
-        }
-        h1, h2 {
-            text-shadow: 3px 3px 10px rgba(255, 255, 0, 0.8);
-        }
-        button, .link-button {
-            background: linear-gradient(45deg, #ff4b2b, #ff416c);
-            border: none;
-            padding: 15px 25px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
-        }
-        button:hover, .link-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.5);
-        }
-        .logo {
-            width: 150px;
-            margin-bottom: 20px;
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" defer></script>
-    <script src="web3.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarsFireCoin Adventure Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.1/web3.min.js"></script>
 </head>
 <body>
-    <img src="marsfire_logo.png" alt="MarsFireCoin Logo" class="logo">
-    <h1>🚀 MarsFireCoin Explorer 🚀</h1>
-    <p style="font-size: 18px; font-weight: bold;">🔥 Use Arrow Keys to Move | Collect Coins | Avoid Asteroids 🔥</p>
+  <div class="header">
+    <img src="marsfirecoin_logo.png" alt="MarsFireCoin Logo" class="logo">
+    <h1>MarsFireCoin Adventure</h1>
+  </div>
 
-    <button id="connectWallet">🚀 Connect Wallet</button>
-    <p id="walletAddress">Not Connected</p>
-    <p id="tokenBalance">MarsFireCoin: 0</p>
+  <div class="game-container">
+    <div class="game-content">
+      <h2>Start your adventure and collect MarsFireCoin tokens!</h2>
+      <button class="game-start-button" onclick="startGame()">Start Game</button>
+      <div id="gameBoard" class="game-board">
+        <!-- Game elements will appear here -->
+      </div>
+      <p id="gameStatus"></p>
+    </div>
+  </div>
 
-    <canvas id="gameCanvas"></canvas>
-
-    <h2>💰 Marketplace 💰</h2>
-    <button onclick="buyItem(1)">🛡 Buy Shield - 5 MFC</button>
-    <button onclick="buyItem(2)">⚡ Buy Speed Boost - 10 MFC</button>
-    <p id="purchaseStatus"></p>
-
-    <h2>🌍 Stay Connected 🌍</h2>
+  <div class="footer">
+    <p>Stay connected:</p>
     <a href="https://www.examplechart.com" target="_blank" class="link-button">📈 Chart</a>
     <a href="https://twitter.com/MarsFireCoin" target="_blank" class="link-button">🐦 Twitter</a>
     <a href="https://t.me/MarsFireCoin" target="_blank" class="link-button">💬 Telegram</a>
+  </div>
 
-    <script>
-        async function connectWallet() {
-            if (window.ethereum) {
-                try {
-                    const provider = new ethers.providers.Web3Provider(window.ethereum);
-                    await window.ethereum.request({ method: "eth_requestAccounts" });
-                    signer = provider.getSigner();
-                    userAddress = await signer.getAddress();
-                    document.getElementById("walletAddress").innerText = "✅ Connected: " + userAddress;
-                    fetchBalance();
-                } catch (error) {
-                    console.error(error);
-                    alert("Wallet connection failed!");
-                }
-            } else {
-                alert("Please install MetaMask!");
-            }
-        }
-
-        document.getElementById("connectWallet").addEventListener("click", connectWallet);
-    </script>
-    <script src="game.js" defer></script>
+  <script src="game.js"></script>
 </body>
 </html>
