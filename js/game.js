@@ -51,7 +51,7 @@ async function connectWallet() {
 // 🎮 Start Quest
 function startQuest() {
     console.log("Quest started!");
-    document.getElementById("game").innerHTML = "🔥 Quest in progress... Earn MarsFireCoin!";
+    document.getElementById("game").innerHTML = `<p>🔥 Quest started! Complete ${totalStages} challenges.</p>`;
     questProgress = 0;
     playerMFC = 0; // Reset earnings
     nextChallenge();
@@ -62,14 +62,19 @@ function nextChallenge() {
     if (questProgress < totalStages) {
         setTimeout(() => {
             const challengeResult = Math.random() < 0.8; // 80% success rate
+            const gameDiv = document.getElementById("game");
+
             if (challengeResult) {
                 const earnedMFC = Math.floor(Math.random() * 50) + 10; // Earn 10-50 MFC
                 playerMFC += earnedMFC;
                 questProgress++;
-                document.getElementById("game").innerHTML = `✅ Challenge ${questProgress}/${totalStages} completed! +${earnedMFC} MFC`;
-                nextChallenge();
+
+                // Append challenge progress instead of replacing the entire text
+                gameDiv.innerHTML += `<p>✅ Challenge ${questProgress}/${totalStages} completed! +${earnedMFC} MFC</p>`;
+
+                nextChallenge(); // Move to the next stage
             } else {
-                document.getElementById("game").innerHTML = `❌ You failed Challenge ${questProgress + 1}. Click "Start Quest" to retry.`;
+                gameDiv.innerHTML += `<p>❌ You failed Challenge ${questProgress + 1}. Click "Start Quest" to retry.</p>`;
             }
         }, 2000);
     } else {
@@ -80,7 +85,8 @@ function nextChallenge() {
 // 🏆 Finish Quest
 function finishQuest() {
     console.log("Quest Completed!");
-    document.getElementById("game").innerHTML = `🎉 Quest Completed! You earned ${playerMFC} MFC!`;
+    const gameDiv = document.getElementById("game");
+    gameDiv.innerHTML += `<p>🎉 Quest Completed! You earned ${playerMFC} MFC!</p>`;
     document.getElementById("start-quest").disabled = false; // Allow replay
 
     // Enable "Buy NFT" if enough MFC is earned
@@ -93,7 +99,7 @@ function finishQuest() {
 function buyNFT() {
     if (playerMFC >= nftPrice) {
         playerMFC -= nftPrice;
-        document.getElementById("game").innerHTML = `🎨 You bought an NFT! Remaining MFC: ${playerMFC}`;
+        document.getElementById("game").innerHTML += `<p>🎨 You bought an NFT! Remaining MFC: ${playerMFC}</p>`;
         console.log("NFT Purchased!");
     } else {
         alert("Not enough MFC to buy an NFT!");
