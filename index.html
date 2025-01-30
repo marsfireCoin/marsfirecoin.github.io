@@ -1,18 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarsFireCoin Quest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+    <script src="js/game.js" defer></script>
+</head>
 <body>
     <div id="game-container">
-        <h1>Welcome to MarsFireCoin Quest</h1>
-        <button id="connect-wallet">Connect Wallet</button>
-        <div id="player-info"></div>
-        <div id="game-screen"></div> <!-- ✅ FIX: Added this -->
-        <button id="start-quest" disabled>Start Quest</button>
+        <h1>🚀 MarsFireCoin Quest 🌕</h1>
+        <button id="connect-wallet">🟢 Connect Wallet</button>
+        <div id="player-info">Wallet: Not connected</div>
+
+        <div id="game-screen">
+            <div id="quest-map">
+                <div id="character"></div>
+            </div>
+        </div>
+
+        <button id="start-quest" disabled>🔥 Start Quest</button>
+        <progress id="quest-progress" value="0" max="5"></progress>
+        <p id="quest-status">Complete quests to earn MarsFireCoin!</p>
+
         <div id="nft-marketplace">
-            <h2>NFT Marketplace</h2>
-            <button id="buy-nft">Buy NFT</button>
+            <h2>🖼️ NFT Marketplace</h2>
+            <div id="nft-preview">
+                <img src="assets/nft.jpg" alt="Mars NFT">
+            </div>
+            <button id="buy-nft" disabled>💰 Buy NFT (100 MFC)</button>
         </div>
     </div>
-    <!-- Move scripts to the bottom to ensure elements exist before JavaScript runs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
-    <script src="js/web3.js"></script>
-    <script src="js/game.js"></script>
 </body>
 </html>

@@ -1,28 +1,66 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     text-align: center;
-    background-color: #1a1a1a;
+    background: url('assets/mars-bg.jpg') no-repeat center fixed;
+    background-size: cover;
     color: white;
 }
 
 #game-container {
-    width: 90%;
-    max-width: 600px;
+    width: 450px;
     margin: auto;
-    background: #222;
     padding: 20px;
+    background: rgba(20, 20, 20, 0.9);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 15px red;
+}
+
+#quest-map {
+    width: 100%;
+    height: 150px;
+    background: url('assets/mars-landscape.png') no-repeat center;
+    background-size: cover;
+    position: relative;
+    margin: 20px 0;
+    border-radius: 10px;
+    border: 2px solid red;
+}
+
+#character {
+    width: 50px;
+    height: 50px;
+    background: url('assets/astronaut.gif') no-repeat center;
+    background-size: contain;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    transition: left 1s ease-in-out;
+}
+
+progress {
+    width: 100%;
+    height: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+    background-color: black;
+}
+
+progress::-webkit-progress-value {
+    background-color: red;
 }
 
 button {
-    background-color: red;
+    background-color: crimson;
     color: white;
+    padding: 12px;
+    font-size: 18px;
     border: none;
-    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
+    margin: 10px;
 }
 
 button:disabled {
@@ -30,27 +68,9 @@ button:disabled {
     cursor: not-allowed;
 }
 
-.quest-map {
-    width: 100%;
+#nft-preview img {
+    width: 100px;
     height: 100px;
-    background: url('mars-surface.png') no-repeat center;
-    background-size: cover;
-    position: relative;
-    margin: 10px 0;
-}
-
-.character {
-    width: 50px;
-    height: 50px;
-    background: url('astronaut.png') no-repeat center;
-    background-size: contain;
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    transition: left 1s;
-}
-
-progress {
-    width: 100%;
-    height: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px white;
 }
