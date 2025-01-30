@@ -1,3 +1,4 @@
+// game.js - Updated Version
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -69,26 +70,14 @@ function gameOver() {
     document.location.reload();
 }
 
-function update() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawSpaceship();
-    drawCoins();
-    drawAsteroids();
-    requestAnimationFrame(update);
-}
-
-spawnCoin();
-setInterval(spawnAsteroid, 2000);
-update();
-
 async function rewardPlayer() {
-    if (!signer) {
+    if (!signer || !userAddress) {
         alert("Connect Wallet First!");
         return;
     }
 
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
-    const amount = ethers.utils.parseUnits("10", 18); // Reward 10 MarsFireCoin
+    const amount = ethers.utils.parseUnits("10", 18);
 
     try {
         const tx = await contract.transfer(userAddress, amount);
@@ -99,7 +88,15 @@ async function rewardPlayer() {
     }
 }
 
-// Call this when score reaches a milestone
-if (score >= 50) {
-    rewardPlayer();
+function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawSpaceship();
+    drawCoins();
+    drawAsteroids();
+    if (score >= 50) rewardPlayer();
+    requestAnimationFrame(update);
 }
+
+spawnCoin();
+setInterval(spawnAsteroid, 2000);
+update();

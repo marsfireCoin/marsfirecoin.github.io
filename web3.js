@@ -21,9 +21,13 @@ async function connectWallet() {
 
 async function fetchBalance() {
     if (!userAddress) return;
-    const contract = new ethers.Contract(contractAddress, contractABI, provider);
-    const balance = await contract.balanceOf(userAddress);
-    document.getElementById("tokenBalance").innerText = `MarsFireCoin: ${ethers.utils.formatUnits(balance, 18)}`;
+    try {
+        const contract = new ethers.Contract(contractAddress, contractABI, provider);
+        const balance = await contract.balanceOf(userAddress);
+        document.getElementById("tokenBalance").innerText = `MarsFireCoin: ${ethers.utils.formatUnits(balance, 18)}`;
+    } catch (error) {
+        console.error("Failed to fetch balance", error);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,21 +35,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function buyItem(itemId) {
-    if (!signer) {
+    if (!signer || !userAddress) {
         alert("Connect Wallet First!");
         return;
     }
-
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
     let cost = itemId === 1 ? ethers.utils.parseUnits("5", 18) : ethers.utils.parseUnits("10", 18);
-
+    
     try {
         const tx = await contract.transfer("YOUR_GAME_WALLET_ADDRESS", cost);
         await tx.wait();
         document.getElementById("purchaseStatus").innerText = "Purchase Successful!";
+        fetchBalance();
     } catch (error) {
         console.error("Transaction failed", error);
         document.getElementById("purchaseStatus").innerText = "Purchase Failed!";
     }
 }
-
