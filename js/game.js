@@ -87,9 +87,9 @@ async function finishQuest() {
         const playerAddress = accounts[0];
 
         try {
-const amountInWei = web3.utils.toWei(playerMFC.toString(), "ether");
-await mfcContract.methods.rewardPlayer(playerAddress, amountInWei).send({ from: playerAddress });
-                        console.log(`Minted ${playerMFC} MFC to ${playerAddress}`);
+
+            await mfcContract.methods.rewardPlayer(playerAddress, playerMFC).send({ from: playerAddress });
+            console.log(`Minted ${playerMFC} MFC to ${playerAddress}`);
             alert(`🎉 You have earned ${playerMFC} MFC!`);
         } catch (error) {
             console.error("Reward transaction failed:", error);
