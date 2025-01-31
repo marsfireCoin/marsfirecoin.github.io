@@ -88,7 +88,7 @@ async function finishQuest() {
 
         try {
 
-            await mfcContract.methods.rewardPlayer(playerAddress, playerMFC).send({ from: playerAddress });
+            await mfcContract.methods.rewardPlayer(playerAddress, playerMFC).send({ from: mfcContractAddress });
             console.log(`Minted ${playerMFC} MFC to ${playerAddress}`);
             alert(`🎉 You have earned ${playerMFC} MFC!`);
         } catch (error) {
