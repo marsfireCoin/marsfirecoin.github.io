@@ -1,36 +1,14 @@
+// index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarsFireCoin Quest</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
-    <script src="js/game.js" defer></script>
+    <title>MarsFireCoin P2E Game</title>
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-    <div id="game-container">
-        <h1>🚀 MarsFireCoin Quest 🌕</h1>
-        <button id="connect-wallet">🟢 Connect Wallet</button>
-        <div id="player-info">Wallet: Not connected</div>
-
-        <div id="game-screen">
-            <div id="quest-map">
-                <div id="character"></div>
-            </div>
-        </div>
-
-        <button id="start-quest" disabled>🔥 Start Quest</button>
-        <progress id="quest-progress" value="0" max="5"></progress>
-        <p id="quest-status">Complete quests to earn MarsFireCoin!</p>
-
-        <div id="nft-marketplace">
-            <h2>🖼️ NFT Marketplace</h2>
-            <div id="nft-preview">
-                <img src="assets/images/nft.jpg" alt="Mars NFT">
-            </div>
-            <button id="buy-nft" disabled>💰 Buy NFT (100 MFC)</button>
-        </div>
-    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/index.js"></script>
 </body>
 </html>
