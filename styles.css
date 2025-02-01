@@ -1,27 +1,17 @@
 body {
-    text-align: center;
-    background-color: black;
-    color: white;
-    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a1a1a;
 }
 
-h1 {
-    margin-top: 20px;
-}
-
-canvas {
-    display: block;
-    background: url('assets/mars-bg.png') no-repeat center center;
+#game-container {
+    width: 800px;
+    height: 600px;
+    border: 2px solid #fff;
+    background-image: url('assets/images/mars-background.png');
     background-size: cover;
-    margin: auto;
-    border: 2px solid red;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
 }

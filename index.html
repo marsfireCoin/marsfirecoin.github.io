@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mars Exploration Game</title>
+    <title>MarsFireCoin Game</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.3/web3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4/web3.min.js"></script>
+    <script type="module" src="game.js"></script>
 </head>
 <body>
-    <h1>Mars Exploration Game 🚀</h1>
-    <button id="connect-wallet">Connect Wallet</button>
-    <p id="wallet-address">Not Connected</p>
-    <p id="mfc-balance">MFC Balance: 0</p>
-    <canvas id="gameCanvas"></canvas>
-    
-    <script src="web3.js"></script>
-    <script src="script.js"></script>
+    <div id="game-container"></div>
 </body>
 </html>
