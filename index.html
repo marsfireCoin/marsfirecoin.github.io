@@ -1,23 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>MarsFOMO - Play to Earn</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.4/dist/web3.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarsFireCoin - Play to Earn on Mars</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --mars-red: #FF4D00;
+            --space-black: #0A0A18;
+            --astro-blue: #00E0FF;
+        }
+
+        body {
+            background: var(--space-black);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+        }
+
+        .mars-gradient-bg {
+            background: linear-gradient(135deg, var(--space-black) 0%, #1A0A00 100%);
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 77, 0, 0.3);
+        }
+
+        .countdown-timer {
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px var(--mars-red);
+        }
+
+        .meme-generator {
+            border: 2px dashed var(--astro-blue);
+            min-height: 400px;
+        }
+
+        .wallet-connect-btn {
+            background: linear-gradient(90deg, var(--mars-red) 0%, var(--astro-blue) 100%);
+            border: none;
+            transition: transform 0.3s ease;
+        }
+
+        .wallet-connect-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
-<body>
-    <h1>MarsFireCoin FOMO Game</h1>
-    
-    <div id="walletSection">
-        <button onclick="connectWallet()">Connect Wallet</button>
-        <p id="walletAddress"></p>
-        <p>Balance: <span id="mfcBalance">0</span> MFC</p>
+<body class="mars-gradient-bg">
+    <!-- Navigation -->
+    <nav class="p-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <img src="mfc-logo.png" alt="MFC Logo" class="h-12">
+            <h1 class="text-2xl font-bold">MarsFireCoin</h1>
+        </div>
+        <button class="wallet-connect-btn px-6 py-3 rounded-full" id="connectWallet">
+            Connect Wallet
+        </button>
+    </nav>
+
+    <!-- Main Game Dashboard -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Battle Section -->
+            <div class="game-card p-6 col-span-2">
+                <h2 class="text-xl mb-4">Current MarsFOMO Battle</h2>
+                <div class="countdown-timer text-center mb-6" id="countdown">
+                    23:59:59
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg mb-2">Prize Pool</h3>
+                        <div class="text-3xl" id="prizePool">0 MFC</div>
+                    </div>
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg mb-2">Your Stake</h3>
+                        <input type="number" class="bg-transparent border rounded-lg px-4 py-2 text-center w-32" 
+                               id="stakeAmount" placeholder="0.1 MFC" min="0.1" step="0.1">
+                    </div>
+                </div>
+                <button class="wallet-connect-btn w-full py-3 rounded-lg mt-4" 
+                        id="joinBattle">
+                    Join Battle (Stake MFC)
+                </button>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="game-card p-6">
+                <h2 class="text-xl mb-4">Top Hypelords</h2>
+                <div class="space-y-3" id="leaderboard">
+                    <div class="flex justify-between">
+                        <span>1. MartianWarrior</span>
+                        <span>420 MFC</span>
+                    </div>
+                    <!-- More leaderboard items -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Meme Generator Section -->
+        <div class="game-card p-6 mt-8">
+            <h2 class="text-xl mb-4">Mars Meme Factory</h2>
+            <div class="meme-generator rounded-lg p-4">
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <button class="bg-gray-800 p-2 rounded-lg">Mars Template 1</button>
+                    <button class="bg-gray-800 p-2 rounded-lg">Mars Template 2</button>
+                    <button class="bg-gray-800 p-2 rounded-lg">Upload Custom</button>
+                </div>
+                <canvas id="memeCanvas" class="w-full h-64 border rounded-lg"></canvas>
+                <input type="text" class="bg-transparent border rounded-lg px-4 py-2 w-full mt-4" 
+                       placeholder="Enter meme text">
+                <button class="wallet-connect-btn px-6 py-2 rounded-lg mt-4">
+                    Mint as NFT (Cost: 10 MFC)
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Transaction Status Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 hidden" id="transactionModal">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900 p-6 rounded-lg">
+            <h3 class="text-xl mb-4" id="txStatus">Processing Transaction...</h3>
+            <div class="flex justify-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+            </div>
+        </div>
     </div>
 
-    <div id="gameSection">
-        <button onclick="claimFreeMFC()">Claim Free MFC</button>
-        <button onclick="enterBattle()">Join Current Battle</button>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.4/dist/web3.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
