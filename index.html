@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarsFireCoin Clicker</title>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarsFOMO - Crypto Hype Battles</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
 <body>
-    <h1>MarsFireCoin Clicker</h1>
-    <div id="game-container"></div>
-    <script src="js/game.js"></script>
+  <header>
+    <div class="logo"><img src="images/logo.png" alt="MarsFireCoin Logo" width="200"></div>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#help">Help</a>
+    </nav>
+  </header>
+
+  <main id="dashboard">
+    <section id="intro">
+      <h1>Welcome to MarsFOMO!</h1>
+      <p>Stake MarsFireCoin on the token with the most hype in the next 24 hours!</p>
+    </section>
+
+    <section id="prediction-cards">
+      <!-- Dynamically populated with game tokens -->
+    </section>
+
+    <section id="player-stake">
+      <h2>Your Stake</h2>
+      <input type="number" id="stake-amount" placeholder="Amount to stake" />
+      <button id="stake-button">
+        <img src="images/stake-icon.png" alt="Stake" width="25"> Stake Tokens
+      </button>
+    </section>
+
+    <section id="prize-pool">
+      <h2>Prize Pool</h2>
+      <p>Total Pool: <span id="total-pool">0</span> MarsFireCoin</p>
+      <p>Your Share: <span id="your-share">0</span></p>
+    </section>
+
+    <section id="countdown-timer">
+      <h2>Time Remaining</h2>
+      <p id="timer">24:00</p>
+    </section>
+
+    <section id="social-actions">
+      <h3>Boost Your Hype!</h3>
+      <p>Share your predictions on social media for bonus rewards:</p>
+      <button class="social-button" id="share-twitter">
+        <img src="images/twitter-logo.png" alt="Twitter" width="25"> Share on Twitter
+      </button>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 MarsFireCoin - All rights reserved.</p>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
