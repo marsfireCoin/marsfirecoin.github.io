@@ -1,6 +1,3 @@
-import Phaser from "phaser";
-import web3 from "./web3.js";
-
 class MarsFireGame extends Phaser.Scene {
   constructor() {
     super({ key: "MarsFireGame" });
@@ -62,5 +59,3 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-
-export default game;
