@@ -61,22 +61,31 @@ function drawPowerUps() {
     });
 }
 
+let gameOver = false;
+
 function checkCollisions() {
+    if (gameOver) return;
+
     coins.forEach((coin, index) => {
-        if (rover.x < coin.x + coin.width && rover.x + rover.width > coin.x && rover.y < coin.y + coin.height && rover.y + rover.height > coin.y) {
+        if (rover.x < coin.x + coin.width && rover.x + rover.width > coin.x &&
+            rover.y < coin.y + coin.height && rover.y + rover.height > coin.y) {
             coins.splice(index, 1);
             score += 10;
-            rewardMFC(1); // Reward 1 MFC per coin collected
+            rewardMFC(1);
         }
     });
+
     obstacles.forEach((obstacle) => {
-        if (rover.x < obstacle.x + obstacle.width && rover.x + rover.width > obstacle.x && rover.y < obstacle.y + obstacle.height && rover.y + rover.height > obstacle.y) {
-            alert("Game Over! Score: " + score);
-            document.location.reload();
+        if (rover.x < obstacle.x + obstacle.width && rover.x + rover.width > obstacle.x &&
+            rover.y < obstacle.y + obstacle.height && rover.y + rover.height > obstacle.y) {
+            gameOver = true;
+            setTimeout(() => {
+                alert("Game Over! Score: " + score);
+                document.location.reload();
+            }, 100);
         }
     });
 }
-
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawRover();
