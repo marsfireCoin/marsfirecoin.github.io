@@ -1,0 +1,1 @@
+@tailwind base;@tailwind components;@tailwind utilities;body{background:linear-gradient(90deg,#8b0000,#000);color:#fff;font-family:Arial,sans-serif}button{transition:all .3s ease-in-out}button:hover{transform:scale(1.05)}
