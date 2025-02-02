@@ -116,11 +116,21 @@ document.addEventListener("DOMContentLoaded", async function () {
         }, 2000);
     }
 
+    function shareAndInvite() {
+        const shareText = "Join me on MarsFire Trivia Quest and win MFC by testing your knowledge! 🚀";
+        if (navigator.share) {
+            navigator.share({
+                title: "MarsFire Trivia Quest",
+                text: shareText,
+                url: window.location.href,
+            }).then(() => console.log("Shared successfully")).catch((error) => console.log("Error sharing", error));
+        } else {
+            alert("Share this link: " + window.location.href);
+        }
+    }
+
     document.querySelector("#connect-wallet").addEventListener("click", connectWallet);
-    document.querySelector("#new-question").addEventListener("click", () => {
-        clickSound.play();
-        displayQuestion();
-    });
+    document.querySelector("#share-button").addEventListener("click", shareAndInvite);
     document.querySelector("#submit-answer").addEventListener("click", checkAnswer);
 
     await loadQuestions();

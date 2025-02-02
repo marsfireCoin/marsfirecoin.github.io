@@ -1,3 +1,4 @@
+/* Updated style.css for MarsFire Trivia Quest */
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
 
 body {
@@ -39,7 +40,7 @@ button:hover {
     transform: scale(1.05);
 }
 
-select, input {
+select {
     padding: 10px;
     border-radius: 5px;
     text-align: center;
@@ -65,13 +66,6 @@ select, input {
     font-size: 20px;
     font-weight: bold;
     margin-top: 10px;
-}
-
-.bonus-round {
-    color: #ff5733;
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 20px;
 }
 
 .ranking {
