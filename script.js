@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     let questionData = [];
-    let timeLeft = 10;
+    let timeLeft = 15;
     let streak = 0;
     let score = 0;
     let isBonusRound = false;
@@ -20,9 +20,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     ];
 
-    const correctSound = new Audio("audio/correct.mp3");
-    const incorrectSound = new Audio("audio/incorrect.mp3");
-    const clickSound = new Audio("audio/click.mp3");
+    const correctSound = new Audio("correct.mp3");
+    const incorrectSound = new Audio("incorrect.mp3");
+    const clickSound = new Audio("click.mp3");
 
     async function connectWallet() {
         if (window.ethereum) {
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function resetTimer() {
         clearInterval(timer);
-        timeLeft = 10;
+        timeLeft = 15;
         document.querySelector("#timer").innerText = timeLeft;
         timer = setInterval(() => {
             timeLeft--;
@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         }, 1000);
     }
 
-    function checkAnswer() {
-        const userAnswer = document.querySelector("#answer").value.trim().toLowerCase();
+    function checkAnswer(selectedOption) {
+        const userAnswer = selectedOption.innerText.trim().toLowerCase();
         const correctAnswer = document.querySelector("#question").dataset.answer.toLowerCase();
         clickSound.play();
 
@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             score += 10;
             if (streak >= 3) {
                 isBonusRound = true;
-                document.querySelector(".bonus-round").style.display = "block";
                 score += 5;
             }
         } else {
@@ -104,25 +103,25 @@ document.addEventListener("DOMContentLoaded", async function () {
             incorrectSound.play();
             streak = 0;
             isBonusRound = false;
-            document.querySelector(".bonus-round").style.display = "none";
         }
 
         document.querySelector("#streak").innerText = streak;
         document.querySelector("#score").innerText = score;
 
         setTimeout(() => {
-            document.querySelector("#answer").value = "";
             displayQuestion();
         }, 2000);
     }
 
-    // Add event listeners after DOM is fully loaded
-    document.querySelector("#connect-wallet")?.addEventListener("click", connectWallet);
-    document.querySelector("#new-question")?.addEventListener("click", () => {
-        clickSound.play();
+    document.querySelector("#connect-wallet").addEventListener("click", connectWallet);
+    document.querySelector("#play-button").addEventListener("click", () => {
+        loadQuestions();
         displayQuestion();
     });
-    document.querySelector("#submit-answer")?.addEventListener("click", checkAnswer);
 
-    await loadQuestions();
+    // Event listeners for answer options
+    document.querySelector("#option-1").addEventListener("click", () => checkAnswer(document.querySelector("#option-1")));
+    document.querySelector("#option-2").addEventListener("click", () => checkAnswer(document.querySelector("#option-2")));
+    document.querySelector("#option-3").addEventListener("click", () => checkAnswer(document.querySelector("#option-3")));
+    document.querySelector("#option-4").addEventListener("click", () => checkAnswer(document.querySelector("#option-4")));
 });

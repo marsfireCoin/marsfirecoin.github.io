@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarsFire Trivia Quest 🚀</title>
     <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
     <div class="container">
@@ -12,7 +13,7 @@
         <p>Win MFC by testing your Mars knowledge!</p>
         
         <button id="connect-wallet">Connect Wallet</button>
-        <p id="balance">Balance: 0 MFC</p>
+        <p class="mfc-balance" id="balance">Balance: 0 MFC</p>
 
         <label for="difficulty">Choose Difficulty:</label>
         <select id="difficulty">
@@ -25,27 +26,24 @@
 
         <div class="question-box">
             <p id="question">Press play to start!</p>
-            <div id="options"></div>
+            <div id="options">
+                <div class="answer-option" id="option-1">Option A</div>
+                <div class="answer-option" id="option-2">Option B</div>
+                <div class="answer-option" id="option-3">Option C</div>
+                <div class="answer-option" id="option-4">Option D</div>
+            </div>
         </div>
 
         <div class="timer-container">⏳ Time Left: <span id="timer">15</span> sec</div>
-        <div class="score-container">🔥 Streak: <span id="streak">0</span> | 🌟 Score: <span id="score">0</span></div>
+        <div class="streak-container">🔥 Streak: <span id="streak">0</span></div>
+        <div class="score-container">🌟 Score: <span id="score">0</span></div>
 
         <p id="feedback"></p>
-
-        <!-- New Question Button -->
-        <button id="new-question">New Question</button>
-
-        <!-- Submit Answer Button -->
-        <button id="submit-answer">Submit Answer</button>
 
         <div class="ranking">
             <h3>Leaderboard</h3>
             <ul id="leaderboard"></ul>
         </div>
     </div>
-
-    <!-- Script moved to bottom -->
-    <script defer src="script.js"></script>
 </body>
 </html>
