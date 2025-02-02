@@ -1,8 +1,17 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #1e1e2f;
+    background-image: url('mars_background.jpg');
+    background-size: cover;
     color: white;
+}
+
+#game-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
 }
 
 button {
@@ -12,10 +21,5 @@ button {
     border: none;
     cursor: pointer;
     margin: 5px;
-}
-
-#app {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
+    font-size: 16px;
 }
