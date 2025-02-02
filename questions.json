@@ -1,0 +1,14 @@
+[
+  {
+    "fact": "Mars has the tallest volcano in the solar system, Olympus Mons.",
+    "difficulty": "easy"
+  },
+  {
+    "fact": "A day on Mars is called a sol and lasts about 24.6 hours.",
+    "difficulty": "medium"
+  },
+  {
+    "fact": "Mars' atmosphere is mostly carbon dioxide, with only 0.13% oxygen.",
+    "difficulty": "hard"
+  }
+]
