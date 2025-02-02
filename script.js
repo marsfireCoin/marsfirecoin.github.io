@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     let score = 0;
     let isBonusRound = false;
     let leaderboard = [];
+    let userAddress = null;
+    let contract, provider, signer;
 
     const timerElement = document.querySelector("#timer");
     const questionBox = document.querySelector("#question");
@@ -14,8 +16,63 @@ document.addEventListener("DOMContentLoaded", async function () {
     const streakBox = document.querySelector("#streak");
     const scoreBox = document.querySelector("#score");
     const leaderboardElement = document.querySelector("#leaderboard");
+    const walletButton = document.querySelector("#connect-wallet");
+    const balanceElement = document.querySelector("#balance");
 
-    // Load Mars facts from JSON
+    // MarsFireCoin Contract Details
+    const contractAddress = "YOUR_MARSFIRECOIN_CONTRACT_ADDRESS"; 
+    const contractABI = [
+        // Minimal ABI for sending tokens
+        {
+            "constant": false,
+            "inputs": [
+                { "name": "recipient", "type": "address" },
+                { "name": "amount", "type": "uint256" }
+            ],
+            "name": "transfer",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [{ "name": "owner", "type": "address" }],
+            "name": "balanceOf",
+            "outputs": [{ "name": "balance", "type": "uint256" }],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ];
+
+    async function connectWallet() {
+        if (window.ethereum) {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await window.ethereum.request({ method: "eth_requestAccounts" });
+            signer = provider.getSigner();
+            userAddress = await signer.getAddress();
+            contract = new ethers.Contract(contractAddress, contractABI, signer);
+            walletButton.innerText = `Connected: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+            updateBalance();
+        } else {
+            alert("Please install MetaMask!");
+        }
+    }
+
+    async function updateBalance() {
+        if (contract && userAddress) {
+            const balance = await contract.balanceOf(userAddress);
+            balanceElement.innerText = `Balance: ${ethers.utils.formatUnits(balance, 18)} MFC`;
+        }
+    }
+
+    async function rewardPlayer(amount) {
+        if (contract && userAddress) {
+            const tx = await contract.transfer(userAddress, ethers.utils.parseUnits(amount.toString(), 18));
+            await tx.wait();
+            updateBalance();
+        }
+    }
+
     async function loadQuestions() {
         const response = await fetch("questions.json");
         questionData = await response.json();
@@ -39,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function startTimer() {
         clearInterval(timer);
-        timeLeft = isBonusRound ? 5 : 10; // Faster timer during bonus round
+        timeLeft = isBonusRound ? 5 : 10;
         timerElement.innerText = timeLeft;
 
         timer = setInterval(() => {
@@ -63,14 +120,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         startTimer();
         playSound("click.mp3");
 
-        // Start Bonus Round if streak >= 5
         if (streak >= 5 && !isBonusRound) {
             isBonusRound = true;
             document.querySelector(".bonus-round").style.display = "block";
         }
     }
 
-    function checkAnswer() {
+    async function checkAnswer() {
         const userAnswer = answerInput.value.trim().toLowerCase();
         const correctAnswer = questionBox.dataset.answer.toLowerCase();
 
@@ -78,7 +134,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             feedbackBox.innerText = "✅ Correct!";
             playSound("correct.mp3");
             streak++;
-            score += isBonusRound ? 20 : 10; // Extra points during bonus round
+            score += isBonusRound ? 20 : 10;
+            await rewardPlayer(5); // Reward 5 MFC tokens
         } else {
             feedbackBox.innerText = "❌ Wrong!";
             playSound("wrong.mp3");
@@ -89,9 +146,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         scoreBox.innerText = score;
         answerInput.value = "";
 
-        // Add to leaderboard
         leaderboard.push({ score, streak });
-        leaderboard.sort((a, b) => b.score - a.score); // Sort by score
+        leaderboard.sort((a, b) => b.score - a.score);
         updateLeaderboard();
 
         clearInterval(timer);
@@ -110,6 +166,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             .join('');
     }
 
+    document.querySelector("#connect-wallet").addEventListener("click", connectWallet);
     await loadQuestions();
     document.querySelector("#new-question").addEventListener("click", displayQuestion);
     document.querySelector("#submit-answer").addEventListener("click", checkAnswer);
