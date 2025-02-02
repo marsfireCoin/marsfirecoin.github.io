@@ -3,43 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarsFire Trivia Quest 🚀</title>
+    <title>MarsFireCoin Trivia Quest 🚀</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1 class="glow">🚀 MarsFire Trivia Quest 🌌</h1>
-        <p>Win MFC by testing your Mars knowledge!</p>
-        
+    <div class="game-container">
+        <h1>MarsFireCoin Trivia Quest</h1>
         <button id="connect-wallet">Connect Wallet</button>
-        <p id="balance">Balance: 0 MFC</p>
-
-        <button id="share-button">Share & Invite Friends 🚀</button>
-
-        <label for="difficulty">Choose Difficulty:</label>
-        <select id="difficulty">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-        </select>
-        
-        <button id="play-button">Start Game</button>
-
-        <div class="question-box">
-            <p id="question">Press play to start!</p>
+        <div id="question-box">
+            <p id="question">Select difficulty to start!</p>
             <div id="options"></div>
         </div>
-
-        <div class="timer-container">⏳ Time Left: <span id="timer">15</span> sec</div>
-        <div class="score-container">🔥 Streak: <span id="streak">0</span> | 🌟 Score: <span id="score">0</span></div>
-
-        <p id="feedback"></p>
-
-        <div class="ranking">
-            <h3>Leaderboard</h3>
-            <ul id="leaderboard"></ul>
+        <div class="score-container">
+            <p>Score: <span id="score">0</span> MFC</p>
         </div>
+        <div class="timer-container">
+            <p>Time Left: <span id="timer">15</span> sec</p>
+        </div>
+        <div id="feedback"></div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

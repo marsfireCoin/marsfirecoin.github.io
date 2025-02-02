@@ -1,85 +1,58 @@
-/* Updated style.css for MarsFire Trivia Quest */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
-
 body {
-    font-family: 'Exo 2', sans-serif;
-    text-align: center;
-    background: url('https://mars.nasa.gov/system/news_items/main_images/9489_PIA25681-FigureA-web.jpg') no-repeat center center/cover;
-    color: #fff;
+    font-family: Arial, sans-serif;
+    background: #0d1b2a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
+    flex-direction: column;
 }
 
-.container {
-    max-width: 600px;
-    margin: 60px auto;
+.game-container {
+    text-align: center;
+    background: #2c3e50;
     padding: 30px;
-    border-radius: 15px;
-    background: rgba(0, 0, 0, 0.85);
-    box-shadow: 0 0 20px rgba(255, 69, 0, 0.9);
-}
-
-h1.glow {
-    color: #ff4500;
-    text-shadow: 0 0 15px #ff5733, 0 0 25px #ff5733, 0 0 50px #ff5733;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 button {
-    background: linear-gradient(45deg, #ff5733, #c70039);
+    background-color: #ff5733;
     color: white;
+    padding: 15px;
     border: none;
-    padding: 12px 24px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 18px;
-    border-radius: 8px;
-    transition: 0.3s;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background: linear-gradient(45deg, #c70039, #ff5733);
-    transform: scale(1.05);
+    background-color: #c70039;
 }
 
-select {
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.question-box {
+#question-box {
     margin-top: 20px;
     padding: 20px;
-    border: 2px solid #ff4500;
-    border-radius: 10px;
     background: rgba(255, 69, 0, 0.2);
-    font-size: 18px;
-    font-weight: bold;
+    border-radius: 8px;
 }
 
-.timer-container, .score-container {
-    font-size: 18px;
-    margin: 10px 0;
+#options {
+    margin-top: 20px;
 }
 
-#feedback {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.ranking {
-    margin-top: 30px;
-    background: rgba(0, 0, 0, 0.6);
+.option {
+    background-color: #333;
     padding: 15px;
-    border-radius: 10px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
 }
 
-#leaderboard {
-    list-style-type: none;
-    padding: 0;
-}
-
-#leaderboard li {
-    margin: 10px 0;
+.option:hover {
+    background-color: #ff4500;
 }
