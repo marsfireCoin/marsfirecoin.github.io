@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarsFire Trivia Quest 🚀</title>
     <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
     <div class="container">
@@ -19,7 +20,7 @@
         </select>
 
         <button id="new-question">Generate Question</button>
-        
+
         <div class="question-box">
             <p id="question">Click the button to get a Mars trivia question!</p>
         </div>
@@ -41,13 +42,13 @@
             <p>🎉 Bonus Round! Answer quickly to earn extra points!</p>
         </div>
 
+        <button id="connect-wallet">Connect Wallet</button>
+        <p id="balance">Balance: 0 MFC</p>
+
         <div class="ranking">
             <h3>Player Rankings</h3>
-            <ul id="leaderboard">
-                <!-- Dynamic leaderboard will appear here -->
-            </ul>
+            <ul id="leaderboard"></ul>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
