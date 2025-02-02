@@ -116,12 +116,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         }, 2000);
     }
 
-    document.querySelector("#connect-wallet").addEventListener("click", connectWallet);
-    document.querySelector("#new-question").addEventListener("click", () => {
+    // Add event listeners after DOM is fully loaded
+    document.querySelector("#connect-wallet")?.addEventListener("click", connectWallet);
+    document.querySelector("#new-question")?.addEventListener("click", () => {
         clickSound.play();
         displayQuestion();
     });
-    document.querySelector("#submit-answer").addEventListener("click", checkAnswer);
+    document.querySelector("#submit-answer")?.addEventListener("click", checkAnswer);
 
     await loadQuestions();
 });
