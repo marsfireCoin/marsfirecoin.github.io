@@ -1,137 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarsFireCoin - Play to Earn on Mars</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <style>
-        :root {
-            --mars-red: #FF4D00;
-            --space-black: #0A0A18;
-            --astro-blue: #00E0FF;
-        }
-
-        body {
-            background: var(--space-black);
-            color: white;
-            font-family: 'Roboto', sans-serif;
-            min-height: 100vh;
-        }
-
-        .mars-gradient-bg {
-            background: linear-gradient(135deg, var(--space-black) 0%, #1A0A00 100%);
-        }
-
-        .game-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 77, 0, 0.3);
-        }
-
-        .countdown-timer {
-            font-size: 2.5rem;
-            text-shadow: 0 0 15px var(--mars-red);
-        }
-
-        .meme-generator {
-            border: 2px dashed var(--astro-blue);
-            min-height: 400px;
-        }
-
-        .wallet-connect-btn {
-            background: linear-gradient(90deg, var(--mars-red) 0%, var(--astro-blue) 100%);
-            border: none;
-            transition: transform 0.3s ease;
-        }
-
-        .wallet-connect-btn:hover {
-            transform: scale(1.05);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarsFire Trivia Quest</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.0.0/dist/ethers.min.js"></script>
+  <style>
+    /* Basic styling for the UI */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #141414;
+      color: white;
+      text-align: center;
+    }
+    button {
+      background-color: #FF6F00;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #ff8000;
+    }
+  </style>
 </head>
-<body class="mars-gradient-bg">
-    <!-- Navigation -->
-    <nav class="p-4 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-            <img src="mfc-logo.png" alt="MFC Logo" class="h-12">
-            <h1 class="text-2xl font-bold">MarsFireCoin</h1>
-        </div>
-        <button class="wallet-connect-btn px-6 py-3 rounded-full" id="connectWallet">
-            Connect Wallet
-        </button>
-    </nav>
+<body>
+  <h1>MarsFire Trivia Quest</h1>
+  
+  <button id="connectButton">Connect Wallet</button>
+  <button id="stakeButton" style="display:none;">Stake MarsFireCoin</button>
+  <button id="withdrawButton" style="display:none;">Withdraw Staked Tokens</button>
 
-    <!-- Main Game Dashboard -->
-    <main class="container mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Battle Section -->
-            <div class="game-card p-6 col-span-2">
-                <h2 class="text-xl mb-4">Current MarsFOMO Battle</h2>
-                <div class="countdown-timer text-center mb-6" id="countdown">
-                    23:59:59
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg mb-2">Prize Pool</h3>
-                        <div class="text-3xl" id="prizePool">0 MFC</div>
-                    </div>
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg mb-2">Your Stake</h3>
-                        <input type="number" class="bg-transparent border rounded-lg px-4 py-2 text-center w-32" 
-                               id="stakeAmount" placeholder="0.1 MFC" min="0.1" step="0.1">
-                    </div>
-                </div>
-                <button class="wallet-connect-btn w-full py-3 rounded-lg mt-4" 
-                        id="joinBattle">
-                    Join Battle (Stake MFC)
-                </button>
-            </div>
+  <div id="userInfo" style="margin-top: 20px;">
+    <p id="walletAddress">Not connected</p>
+    <p id="balance">Balance: 0 MFC</p>
+  </div>
 
-            <!-- Leaderboard -->
-            <div class="game-card p-6">
-                <h2 class="text-xl mb-4">Top Hypelords</h2>
-                <div class="space-y-3" id="leaderboard">
-                    <div class="flex justify-between">
-                        <span>1. MartianWarrior</span>
-                        <span>420 MFC</span>
-                    </div>
-                    <!-- More leaderboard items -->
-                </div>
-            </div>
-        </div>
+  <script>
+    const connectButton = document.getElementById("connectButton");
+    const stakeButton = document.getElementById("stakeButton");
+    const withdrawButton = document.getElementById("withdrawButton");
+    const walletAddressElem = document.getElementById("walletAddress");
+    const balanceElem = document.getElementById("balance");
 
-        <!-- Meme Generator Section -->
-        <div class="game-card p-6 mt-8">
-            <h2 class="text-xl mb-4">Mars Meme Factory</h2>
-            <div class="meme-generator rounded-lg p-4">
-                <div class="grid grid-cols-3 gap-4 mb-4">
-                    <button class="bg-gray-800 p-2 rounded-lg">Mars Template 1</button>
-                    <button class="bg-gray-800 p-2 rounded-lg">Mars Template 2</button>
-                    <button class="bg-gray-800 p-2 rounded-lg">Upload Custom</button>
-                </div>
-                <canvas id="memeCanvas" class="w-full h-64 border rounded-lg"></canvas>
-                <input type="text" class="bg-transparent border rounded-lg px-4 py-2 w-full mt-4" 
-                       placeholder="Enter meme text">
-                <button class="wallet-connect-btn px-6 py-2 rounded-lg mt-4">
-                    Mint as NFT (Cost: 10 MFC)
-                </button>
-            </div>
-        </div>
-    </main>
+    let userWalletAddress = "";
+    let provider;
+    let signer;
+    let marsFireCoinContract;
+    let stakingContract;
+    const MARSFIRECOIN_ADDRESS = "YOUR_MARSFIRECOIN_CONTRACT_ADDRESS";
+    const STAKING_ADDRESS = "YOUR_STAKING_CONTRACT_ADDRESS";
 
-    <!-- Transaction Status Modal -->
-    <div class="fixed inset-0 bg-black bg-opacity-50 hidden" id="transactionModal">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900 p-6 rounded-lg">
-            <h3 class="text-xl mb-4" id="txStatus">Processing Transaction...</h3>
-            <div class="flex justify-center">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-            </div>
-        </div>
-    </div>
+    const marsFireCoinABI = [
+      "function balanceOf(address owner) view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) public returns (bool)"
+    ];
 
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.4/dist/web3.min.js"></script>
-    <script src="app.js"></script>
+    const stakingABI = [
+      "function stake(uint256 amount) external",
+      "function withdraw(uint256 amount) external"
+    ];
+
+    connectButton.addEventListener("click", async () => {
+      if (typeof window.ethereum !== "undefined") {
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        signer = provider.getSigner();
+        const accounts = await provider.send("eth_requestAccounts", []);
+        userWalletAddress = accounts[0];
+        
+        walletAddressElem.textContent = `Wallet Address: ${userWalletAddress}`;
+        
+        // Initialize contracts
+        marsFireCoinContract = new ethers.Contract(MARSFIRECOIN_ADDRESS, marsFireCoinABI, signer);
+        stakingContract = new ethers.Contract(STAKING_ADDRESS, stakingABI, signer);
+        
+        // Fetch balance
+        const balance = await getBalance(userWalletAddress);
+        balanceElem.textContent = `Balance: ${ethers.utils.formatUnits(balance, 18)} MFC`;
+
+        // Show staking options
+        stakeButton.style.display = "inline-block";
+        withdrawButton.style.display = "inline-block";
+      } else {
+        alert("Please install MetaMask!");
+      }
+    });
+
+    async function getBalance(address) {
+      return await marsFireCoinContract.balanceOf(address);
+    }
+
+    stakeButton.addEventListener("click", async () => {
+      const amount = prompt("Enter amount to stake:");
+      if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+        const amountInWei = ethers.utils.parseUnits(amount, 18);
+        await stakingContract.stake(amountInWei);
+        alert(`${amount} MarsFireCoin staked successfully!`);
+      } else {
+        alert("Invalid amount");
+      }
+    });
+
+    withdrawButton.addEventListener("click", async () => {
+      const amount = prompt("Enter amount to withdraw:");
+      if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+        const amountInWei = ethers.utils.parseUnits(amount, 18);
+        await stakingContract.withdraw(amountInWei);
+        alert(`${amount} MarsFireCoin withdrawn successfully!`);
+      } else {
+        alert("Invalid amount");
+      }
+    });
+  </script>
 </body>
 </html>
