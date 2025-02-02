@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const contractAddress = "YOUR_CONTRACT_ADDRESS";
+    const contractAddress = "0x3AcDA392212927f9F7f71421355Ae5040eDC0d94";
     const abi = [
         { "constant": false, "inputs": [{"name": "player", "type": "address"}, {"name": "amount", "type": "uint256"}], "name": "rewardPlayer", "outputs": [], "type": "function" }
     ];
