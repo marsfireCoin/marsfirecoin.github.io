@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.4d16a91d.css",
-    "main.js": "/static/js/main.3963b9a6.js",
+    "main.js": "/static/js/main.ea57c377.js",
     "static/media/mars-bg.jpg": "/static/media/mars-bg.66b44ee6769c82ffff00.jpg",
     "static/media/loading.gif": "/static/media/loading.cb1740caa77c4e39d910.gif",
     "static/media/logo.png": "/static/media/logo.7bf0712ede957b33dcf7.png",
@@ -9,10 +9,10 @@
     "static/media/wrong.mp3": "/static/media/wrong.f79d693e833d6f705cdd.mp3",
     "index.html": "/index.html",
     "main.4d16a91d.css.map": "/static/css/main.4d16a91d.css.map",
-    "main.3963b9a6.js.map": "/static/js/main.3963b9a6.js.map"
+    "main.ea57c377.js.map": "/static/js/main.ea57c377.js.map"
   },
   "entrypoints": [
     "static/css/main.4d16a91d.css",
-    "static/js/main.3963b9a6.js"
+    "static/js/main.ea57c377.js"
   ]
 }
